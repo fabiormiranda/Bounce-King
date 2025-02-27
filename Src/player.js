@@ -1,8 +1,8 @@
 class Player {
   constructor(gameScreen) {
     this.gameScreen = gameScreen;
-    this.width = 200;
-    this.height = 320;
+    this.width = 170;
+    this.height = 250;
     this.top = gameScreen.offsetHeight - this.height - 50;
     this.left = gameScreen.offsetWidth / 2 - this.width / 2;
     this.isJumping = false;
@@ -12,7 +12,7 @@ class Player {
     this.animationFrame = null;
 
     this.element = document.createElement("img");
-    this.element.src = "./Images/Ronaldinho.png";
+    this.element.src = "Images/Ronaldinho.png";
     this.element.style.position = "absolute";
     this.element.style.width = `${this.width}px`;
     this.element.style.height = `${this.height}px`;
@@ -30,7 +30,7 @@ class Player {
         this.movingLeft = true;
       if (event.key === "ArrowRight" || event.key === "d")
         this.movingRight = true;
-      if (event.key === " ") this.jumpPlayer(); // SALTAR COM ESPAÇO
+      if (event.key === " ") this.jumpPlayer();
       this.startMoving();
     });
 
@@ -39,7 +39,7 @@ class Player {
         this.movingLeft = false;
       if (event.key === "ArrowRight" || event.key === "d")
         this.movingRight = false;
-
+      
       if (!this.movingLeft && !this.movingRight) this.stopMoving();
     });
   }
@@ -75,6 +75,12 @@ class Player {
 
   movePlayer(movementSpeed) {
     this.left += movementSpeed;
+    if (this.left < 0) {
+      this.left = 0;
+    }
+    if (this.left > this.gameScreen.offsetWidth - this.width) {
+      this.left = this.gameScreen.offsetWidth - this.width;
+    }
     this.element.style.left = `${this.left}px`;
   }
 
@@ -82,8 +88,8 @@ class Player {
     if (this.isJumping) return;
     this.isJumping = true;
     const initialTop = this.top;
-    const jumpHeight = 150;
-    const jumpDuration = 500;
+    const jumpHeight = 250;
+    const jumpDuration = 450;
 
     let startTime = null;
     const animateJump = (timestamp) => {

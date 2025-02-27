@@ -9,7 +9,7 @@ body {
 #game-intro {
   width: 100vw;
   height: 100vh;
-  background-image: url(../images/Background.png);
+  background-image: url(/Images/Background.png);
   background-size: cover;
   background-position: center;
   display: flex;

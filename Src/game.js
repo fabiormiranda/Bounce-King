@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function startGame() {
     console.log("Jogo iniciado!");
     player = new Player(gameScreen);
-    ball = new Ball(gameScreen, loseLife);
+    ball = new Ball(gameScreen, player, loseLife);
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") {
