@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function gameLoop() {
     ball.moveBall();
     ball.checkCollision(player);
-    requestAnimationFrame(gameLoop);
+    /* requestAnimationFrame(gameLoop); */
   }
 
   function loseLife() {

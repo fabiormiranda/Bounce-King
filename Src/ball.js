@@ -16,7 +16,7 @@ class Ball {
       
       // Criar o elemento da bola no DOM
       this.element = document.createElement("img");
-      this.element.src = "./Images/ball.png";
+      this.element.src = "Images/ball.png";
       this.element.style.position = "absolute";
       this.element.style.width = `${this.width}px`;
       this.element.style.height = `${this.height}px`;
@@ -79,7 +79,7 @@ class Ball {
         ballRect.left < playerRect.right &&
         ballRect.right > playerRect.left &&
         ballRect.bottom >= playerRect.top &&
-        ballRect.top < playerRect.top + playerRect.height / 4
+        ballRect.top < playerRect.top + playerRect.height /4
       );
     }
   
