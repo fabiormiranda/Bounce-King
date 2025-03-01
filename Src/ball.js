@@ -14,7 +14,7 @@ class Ball {
     this.collisionCooldown = false;
 
     this.element = document.createElement("img");
-    this.element.src = "Images/Ball.png";
+    this.element.src = "./Images/Ball.png";
     this.element.style.position = "absolute";
     this.element.style.width = `${this.width}px`;
     this.element.style.height = `${this.height}px`;
