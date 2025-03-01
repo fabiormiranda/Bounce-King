@@ -35,17 +35,17 @@ class Obstacle {
     const playerRect = player.element.getBoundingClientRect();
 
     if (
-        obstacleRect.left < playerRect.right &&
-        obstacleRect.right > playerRect.left &&
-        obstacleRect.top < playerRect.bottom &&
-        obstacleRect.bottom > playerRect.top
+      obstacleRect.left < playerRect.right &&
+      obstacleRect.right > playerRect.left &&
+      obstacleRect.top < playerRect.bottom &&
+      obstacleRect.bottom > playerRect.top
     ) {
-        loseLife(false); 
-        this.remove(); 
-        return true;
+      loseLife(false);
+      this.remove();
+      return true;
     }
     return false;
-}
+  }
 
   isOutOfScreen() {
     return (

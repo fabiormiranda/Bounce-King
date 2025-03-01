@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     gameInterval = setInterval(gameLoop, 16);
-    setInterval(spawnObstacle, 3000); 
+    setInterval(spawnObstacle, 3000);
   }
 
   function gameLoop() {
@@ -74,19 +74,19 @@ document.addEventListener("DOMContentLoaded", () => {
     livesElement.textContent = lives;
 
     if (lives <= 0) {
-        clearInterval(gameInterval);
-        location.reload();
+      clearInterval(gameInterval);
+      location.reload();
     }
 
     if (resetObstacles) {
-        resetAllObstacles();
+      resetAllObstacles();
     }
-}
+  }
 
-function resetAllObstacles() {
-  obstacles.forEach(obstacle => obstacle.remove());
-  obstacles = [];
-}
+  function resetAllObstacles() {
+    obstacles.forEach((obstacle) => obstacle.remove());
+    obstacles = [];
+  }
 
   function spawnObstacle() {
     const obstacleTypes = ["Pepe", "Ramos"];

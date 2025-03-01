@@ -7,7 +7,7 @@ class Ball {
 
     this.width = 60;
     this.height = 60;
-    this.gravity = 0.005; 
+    this.gravity = 0.005;
     this.bounceStrength = -3;
     this.isPaused = false;
     this.movementInterval = null;
@@ -34,7 +34,7 @@ class Ball {
       if (!this.isPaused) {
         this.moveBall();
       }
-    },);
+    });
   }
 
   moveBall() {
@@ -55,7 +55,7 @@ class Ball {
     }
 
     if (!this.collisionCooldown && this.didCollide()) {
-      this.velocityY = this.bounceStrength ;
+      this.velocityY = this.bounceStrength;
       this.velocityX = (Math.random() > 0.5 ? 1 : -1) * 2;
       this.collisionCooldown = true;
       setTimeout(() => {
