@@ -16,7 +16,7 @@ class Ball {
       
       // Criar o elemento da bola no DOM
       this.element = document.createElement("img");
-      this.element.src = "Images/ball.png";
+      this.element.src = "./Images/ball.png";
       this.element.style.position = "absolute";
       this.element.style.width = `${this.width}px`;
       this.element.style.height = `${this.height}px`;
