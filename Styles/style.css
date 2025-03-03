@@ -51,7 +51,7 @@ h1 {
   height: 100vh;
   overflow: hidden;
   position: relative;
-  background-image: url(/Images/game.png);
+  background-image: url(../Images/game.png);
   background-size: cover;
   background-position: center;
   animation: slide 5s linear infinite; 
