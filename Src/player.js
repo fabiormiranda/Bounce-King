@@ -4,7 +4,7 @@ class Player {
     this.width = 120;
     this.height = 200;
     this.isJumping = false;
-    this.speed = 3.5;
+    this.speed = 3;
     this.movingLeft = false;
     this.movingRight = false;
     this.movementInterval = null;

@@ -17,22 +17,22 @@ body {
   align-items: center;
 }
 
-.box {
+.middle-box {
   width: 700px;
   height: 670px;
-  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
   border: none;
+  padding-bottom: 270px;
 }
 
-.box h1 {
-  color: #d2a64b;
+.middle-box h1 {
+  color: #04eb04;
   font-size: 2.5em;
   line-height: 1.2;
-  text-shadow: 3px 3px red, 0 0 1em blue, 0 0 1.2em blue;
+  text-shadow: 3px 3px rgb(193, 201, 93), 0 0 1em rgb(229, 255, 0), 0 0 1.2em rgb(223, 248, 1);
 }
 
 h1 {
@@ -41,8 +41,8 @@ h1 {
 }
 
 #logo {
-  height: 350px;
-  width: 350px;
+  height: 500px;
+  width: 500px;
 }
 
 #game-screen {
@@ -51,8 +51,28 @@ h1 {
   height: 100vh;
   overflow: hidden;
   position: relative;
+  background-image: url(../Images/game.png);
   background-size: cover;
   background-position: center;
-  animation: slide 5slinear infinite;
-  justify-content: space-between;
+  animation: slide 5s linear infinite; 
+}
+
+#score, #lives {
+  position: absolute;
+  top: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 20px;
+  min-width: 100px;
+  text-align: center;
+}
+
+#score {
+  left: 10px;
+}
+
+#lives {
+  left: 130px; 
 }

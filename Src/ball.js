@@ -8,7 +8,7 @@ class Ball {
     this.width = 60;
     this.height = 60;
     this.gravity = 0.005;
-    this.bounceStrength = -3;
+    this.bounceStrength = -2.7;
     this.isPaused = false;
     this.movementInterval = null;
     this.collisionCooldown = false;
