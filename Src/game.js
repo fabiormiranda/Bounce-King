@@ -1,108 +1,111 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const startForm = document.getElementById("start-form");
-  const gameIntro = document.getElementById("game-intro");
-  const gameScreen = document.getElementById("game-screen");
-  const scoreElement = document.getElementById("score").querySelector("span");
-  const livesElement = document.getElementById("lives").querySelector("span");
+class Game {
+  constructor() {
+    this.startForm = document.getElementById("start-form");
+    this.gameIntro = document.getElementById("game-intro");
+    this.gameScreen = document.getElementById("game-screen");
+    this.gameOverScreen = document.getElementById("game-over");
+    this.scoreElement = document.getElementById("score").querySelector("span");
+    this.livesElement = document.getElementById("lives").querySelector("span");
+    this.endScore = document.getElementById("end-score");
 
-  let player;
-  let ball;
-  let score = 0;
-  let lives = 5;
-  let gameInterval;
-  let obstacles = [];
+    this.playerName = "";
+    this.player = null;
+    this.ball = null;
+    this.score = 0;
+    this.lives = 5;
+    this.gameInterval = null;
+    this.obstaclesInterval = null;
+    this.obstacles = [];
 
-  function increaseScore() {
-    score++;
-    scoreElement.textContent = score;
+    this.startForm.addEventListener("submit", (event) => this.startGame(event));
   }
 
-  startForm.addEventListener("submit", (event) => {
+  startGame(event) {
     event.preventDefault();
-
-    gameIntro.style.display = "none";
-    gameScreen.style.display = "block";
-    scoreElement.textContent = score;
-    livesElement.textContent = lives;
-
-    startGame();
-  });
-
-  function startGame() {
-    player = new Player(gameScreen);
-    ball = new Ball(gameScreen, player, loseLife, increaseScore);
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") {
-        player.movingLeft = true;
-      }
-      if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") {
-        player.movingRight = true;
-      }
-      if (event.key === " " || event.key === "Spacebar") {
-        player.jumpPlayer();
-      }
-    });
-
-    document.addEventListener("keyup", (event) => {
-      if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") {
-        player.movingLeft = false;
-      }
-      if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") {
-        player.movingRight = false;
-      }
-    });
-
-    gameInterval = setInterval(gameLoop, 16);
-    setInterval(spawnObstacle, 3000);
+    this.playerName = document.getElementById("player").value.trim();
+    this.gameIntro.style.display = "none";
+    this.gameScreen.style.display = "block";
+    this.resetGame();
+    this.beginGame();
   }
 
-  function gameLoop() {
-    ball.moveBall();
-    updateObstacles();
-
-    obstacles = obstacles.filter((obstacle) => {
-      if (obstacle.checkCollision(player, loseLife)) {
-        return false;
-      }
-      return true;
-    });
+  resetGame() {
+    this.score = 0;
+    this.lives = 5;
+    this.scoreElement.textContent = this.score;
+    this.livesElement.textContent = this.lives;
+    this.obstacles = [];
   }
 
-  function loseLife(resetObstacles) {
-    lives--;
-    livesElement.textContent = lives;
+  beginGame() {
+    this.player = new Player(this.gameScreen);
+    this.ball = new Ball(this.gameScreen, this.player, () => this.loseLife(), () => this.increaseScore());
+    document.addEventListener("keydown", (event) => this.handleKeyDown(event));
+    document.addEventListener("keyup", (event) => this.handleKeyUp(event));
+    this.gameInterval = setInterval(() => this.gameLoop(), 16);
+    this.obstaclesInterval = setInterval(() => this.spawnObstacle(), 3000);
+  }
 
-    if (lives <= 0) {
-      clearInterval(gameInterval);
-      location.reload();
-    }
+  handleKeyDown(event) {
+    if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") this.player.movingLeft = true;
+    if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") this.player.movingRight = true;
+    if (event.key === " " || event.key === "Spacebar") this.player.jumpPlayer();
+  }
 
-    if (resetObstacles) {
-      resetAllObstacles();
+  handleKeyUp(event) {
+    if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") this.player.movingLeft = false;
+    if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") this.player.movingRight = false;
+  }
+
+  gameLoop() {
+    this.ball.moveBall();
+    this.updateObstacles();
+    this.obstacles = this.obstacles.filter((obstacle) => !obstacle.checkCollision(this.player, () => this.loseLife()));
+  }
+
+  increaseScore() {
+    this.score++;
+    this.scoreElement.textContent = this.score;
+  }
+
+  loseLife() {
+    this.lives--;
+    this.livesElement.textContent = this.lives;
+    if (this.lives <= 0) {
+      clearInterval(this.gameInterval);
+      this.gameOver();
     }
   }
 
-  function resetAllObstacles() {
-    obstacles.forEach((obstacle) => obstacle.remove());
-    obstacles = [];
-  }
-
-  function spawnObstacle() {
+  spawnObstacle() {
     const obstacleTypes = ["Pepe", "Ramos"];
-    const randomType =
-      obstacleTypes[Math.floor(Math.random() * obstacleTypes.length)];
-    const obstacle = new Obstacle(gameScreen, randomType);
-    obstacles.push(obstacle);
+    const randomType = obstacleTypes[Math.floor(Math.random() * obstacleTypes.length)];
+    const obstacle = new Obstacle(this.gameScreen, randomType);
+    this.obstacles.push(obstacle);
   }
 
-  function updateObstacles() {
-    obstacles.forEach((obstacle, index) => {
+  updateObstacles() {
+    this.obstacles.forEach((obstacle, index) => {
       obstacle.moveObstacle();
       if (obstacle.isOutOfScreen()) {
         obstacle.remove();
-        obstacles.splice(index, 1);
+        this.obstacles.splice(index, 1);
       }
     });
   }
+
+  gameOver() {
+    this.player.element.remove();
+    this.obstacles.forEach((obstacle) => obstacle.element.remove());
+    this.livesElement.innerHTML = "";
+    this.gameScreen.style.display = "none";
+    this.gameOverScreen.style.display = "flex";
+    this.endScore.innerText = this.score;
+    clearInterval(this.gameInterval);
+    clearInterval(this.obstaclesInterval);
+    document.getElementById("restart-button").addEventListener("click", () => location.reload());
+  }
+} 
+document.addEventListener("DOMContentLoaded", () => {
+  new Game();
 });

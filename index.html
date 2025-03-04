@@ -10,34 +10,39 @@
     <main>
       <div id="game-intro">
         <div class="middle-box">
-          <img id="logo" src="Images/logo.png" alt="" />
+          <img id="logo" src="Images/logo.png" alt="Bounce King Logo" />
           <div class="intro">
             <h1>Welcome to Bounce King</h1>
-            <div id="intro">
-              <p></p>
-            </div>
           </div>
+        </div>
+        <div class="start-container">
           <form id="start-form">
-            <input
-              type="text"
-              id="player"
-              placeholder="Your Name"
-        
-            />
-            <!-- colocar na linha de cima !!!   required=""-->
+            <input type="text" id="player" placeholder="Your Name" required />
             <button type="submit" id="start-button">Start Game</button>
           </form>
           <div id="settings">
-            <button id="instruction-button">Instruction</button>
+            <button id="instruction-button">Instructions</button>
             <div id="instructions"></div>
           </div>
         </div>
       </div>
+
       <div id="game-screen">
         <p id="score">Score: <span>0</span></p>
         <p id="lives">Lives: <span>5</span></p>
       </div>
+
+      <div id="game-over">
+        <div class="box">
+          <h2>Game Over</h2>
+          <button id="restart-button">Restart Game</button>
+          <h2>Final Score: <span id="end-score">0</span></h2>
+          <h3>High Score: <span id="high-score">0</span></h3>
+          <ol class="high-score-list"></ol>
+        </div>
+      </div>
     </main>
+
     <script src="Src/game.js"></script>
     <script src="Src/player.js"></script>
     <script src="Src/ball.js"></script>
