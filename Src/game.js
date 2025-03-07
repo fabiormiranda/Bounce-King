@@ -118,6 +118,9 @@ class Game {
   loseLife() {
     this.lives--;
     this.livesElement.textContent = this.lives;
+
+    this.obstacles.forEach((obstacle) => obstacle.remove());
+    this.obstacles = [];
     if (this.lives <= 0) {
       clearInterval(this.gameInterval);
       this.gameOver();
@@ -185,16 +188,15 @@ class Game {
     this.introMusic.currentTime = 0;
     this.introMusic.play();
   }
-  
+
   playInGameMusic() {
     this.inGameMusic.play();
   }
-  
+
   playGameOverMusic() {
     this.gameOverMusic.currentTime = 0;
     this.gameOverMusic.play();
   }
-  
 }
 
 document.addEventListener("DOMContentLoaded", () => {
