@@ -186,8 +186,10 @@ class Game {
 
   playIntroMusic() {
     this.introMusic.currentTime = 0;
-    this.introMusic.play();
+    this.introMusic.play().catch((error) => {
+    });
   }
+  
 
   playInGameMusic() {
     this.inGameMusic.play();
