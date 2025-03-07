@@ -1,5 +1,8 @@
 class Game {
   constructor() {
+    
+    this.musicPlayed = false;
+
     this.startForm = document.getElementById("start-form");
     this.gameIntro = document.getElementById("game-intro");
     this.gameScreen = document.getElementById("game-screen");
@@ -27,17 +30,26 @@ class Game {
 
     this.introMusic.loop = true;
 
+    
     this.startForm.addEventListener("submit", (event) => this.startGame(event));
+
+    
     document
       .getElementById("restart-button")
       .addEventListener("click", () => this.restartGame());
+    
+    
     this.instructionButton = document.getElementById("instruction-button");
     this.instructions = document.getElementById("instructions");
 
     this.instructionButton.addEventListener("click", () =>
       this.toggleInstructions()
     );
-    this.playIntroMusic();
+
+    
+    document.body.addEventListener("click", () => {
+      this.playIntroMusic();
+    });
   }
 
   toggleInstructions() {
@@ -181,15 +193,20 @@ class Game {
     clearInterval(this.gameInterval);
     clearInterval(this.obstaclesInterval);
 
-    this.playIntroMusic();
+    
+    this.musicPlayed = false;  
+    this.playIntroMusic();  
   }
 
   playIntroMusic() {
-    this.introMusic.currentTime = 0;
-    this.introMusic.play().catch((error) => {
-    });
+    if (!this.musicPlayed) {
+      this.introMusic.currentTime = 0;  
+      this.introMusic.play().catch((error) => {
+        console.log("Erro ao tentar tocar a música:", error);
+      });
+      this.musicPlayed = true;  
+    }
   }
-  
 
   playInGameMusic() {
     this.inGameMusic.play();
