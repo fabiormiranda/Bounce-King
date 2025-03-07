@@ -8,6 +8,7 @@ class Game {
     this.scoreElement = document.getElementById("score").querySelector("span");
     this.livesElement = document.getElementById("lives").querySelector("span");
     this.endScore = document.getElementById("end-score");
+    this.highscoreList = document.querySelector(".high-score-list");
 
     this.playerName = "";
     this.player = null;
@@ -127,7 +128,7 @@ class Game {
 
     if (!isCollision) {
       this.obstacles.forEach((obstacle) => obstacle.remove());
-      this.obstacles = []; 
+      this.obstacles = [];
     }
 
     if (this.lives <= 0) {
@@ -163,6 +164,12 @@ class Game {
     this.gameOverScreen.style.display = "flex";
     this.endScore.innerText = this.score;
 
+    this.saveHighScore();
+    this.displayHighScores();
+
+    const highScoreContainer = document.querySelector(".high-score-container");
+    highScoreContainer.style.display = "flex";
+
     clearInterval(this.gameInterval);
     clearInterval(this.obstaclesInterval);
 
@@ -172,17 +179,52 @@ class Game {
     this.playGameOverMusic();
   }
 
+  saveHighScore() {
+    let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+    const existingPlayerIndex = highScores.findIndex(
+      (score) => score.name === this.playerName
+    );
+
+    if (existingPlayerIndex !== -1) {
+      if (this.score > highScores[existingPlayerIndex].score) {
+        highScores[existingPlayerIndex].score = this.score;
+      }
+    } else {
+      highScores.push({ name: this.playerName, score: this.score });
+    }
+
+    highScores.sort((a, b) => b.score - a.score);
+
+    highScores = highScores.slice(0, 3);
+
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+  }
+
+  displayHighScores() {
+    let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+    this.highscoreList.innerHTML = "";
+
+    highScores.forEach((score, index) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = `${index + 1}. ${score.name} - ${score.score}`;
+      this.highscoreList.appendChild(listItem);
+    });
+  }
+
   restartGame() {
     this.resetGame();
     this.gameOverScreen.style.display = "none";
-    this.gameIntro.style.display = "";
+    this.gameIntro.style.display = "flex";
 
     if (this.ball) {
       this.ball.element.remove();
+      this.ball = null;
     }
 
     if (this.player) {
       this.player.element.remove();
+      this.player = null;
     }
 
     this.obstacles.forEach((obstacle) => obstacle.remove());
@@ -197,10 +239,7 @@ class Game {
 
   playIntroMusic() {
     if (!this.musicPlayed) {
-      this.introMusic.currentTime = 0;
-      this.introMusic.play().catch((error) => {
-        console.log("Erro ao tentar tocar a música:", error);
-      });
+      this.introMusic.play();
       this.musicPlayed = true;
     }
   }
@@ -210,11 +249,10 @@ class Game {
   }
 
   playGameOverMusic() {
-    this.gameOverMusic.currentTime = 0;
     this.gameOverMusic.play();
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  new Game();
+  const game = new Game();
 });
