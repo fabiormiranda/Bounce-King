@@ -84,10 +84,10 @@ body {
   background-image: url(../Images/gameover.png);
   background-size: cover;
   background-position: center;
-  display: flex; /* Usa flexbox para centralizar */
-  justify-content: center; /* Alinha o conteúdo horizontalmente */
-  align-items: center; /* Alinha o conteúdo verticalmente */
-  padding-top: 0px; /* Ajuste da posição */
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  padding-top: 0px; 
 }
 
 #game-over .box {
@@ -98,7 +98,7 @@ body {
 
 #game-over h2 {
   color: #ffcc00;
-  font-size: 5em; /* Aumentando o tamanho da palavra "Game Over" */
+  font-size: 5em; 
   font-weight: bold;
   margin: 30px 0;
   text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.7);
@@ -164,12 +164,12 @@ body {
   padding: 10px 20px;
   border-radius: 30px;
   position: absolute;
-  bottom: 100px; /* Para abrir um pouco acima do botão */
-  left: 10px; /* Alinha com o botão */
-  width: 200px; /* Tamanho reduzido para parecer uma janela pequena */
-  text-align: left; /* Texto alinhado à esquerda */
+  bottom: 100px; 
+  left: 10px; 
+  width: 200px; 
+  text-align: left; 
   z-index: 20;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra para dar um efeito de profundidade */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
 }
 
 #instructions::before {
@@ -179,7 +179,7 @@ body {
   left: 40%;
   border-width: 10px;
   border-style: solid;
-  border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent; /* Seta para cima */
+  border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent; 
 }
 
 .start-container button:hover {
