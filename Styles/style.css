@@ -29,24 +29,23 @@ body {
 }
 
 .middle-box h1 {
-  color: #a1ca4a;
+  color: #e9be33;
   font-size: 3.5em;  
   font-weight: bold;
-  padding-left: 77px;
+  padding: 0px 0px 80px 77px;
   letter-spacing: 2px;  
   text-align: center;
-  padding-top: 80px;
   text-shadow:
-  4px 3px 0px #f5d736, 
+  4px 3px 0px #000000, 
   0 0 15px #0bb7e5,  
-  0 0 25px #e2e9e4,  
-  0 0 35px #0bb7e5; 
+  0 0 25px #c1f893,  
+  0 0 35px #4dc928; 
 }
 
 #logo {
-  height: 600px;
-  width: 600px;
-  padding-left: 70px;
+  height: 450px;
+  width: 450px;
+  padding-left: 75px;
 }
 
 #game-screen {
@@ -129,7 +128,7 @@ body {
   padding: 8px;
   font-size: 14px;
   width: 180px;
-  border: 2px solid #deee53d7;
+  border: 2px solid #d3b614d7;
   border-radius: 5px;
   text-align: center;
 }

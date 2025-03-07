@@ -1,8 +1,6 @@
 class Game {
   constructor() {
-    
     this.musicPlayed = false;
-
     this.startForm = document.getElementById("start-form");
     this.gameIntro = document.getElementById("game-intro");
     this.gameScreen = document.getElementById("game-screen");
@@ -30,15 +28,10 @@ class Game {
 
     this.introMusic.loop = true;
 
-    
     this.startForm.addEventListener("submit", (event) => this.startGame(event));
-
-    
     document
       .getElementById("restart-button")
       .addEventListener("click", () => this.restartGame());
-    
-    
     this.instructionButton = document.getElementById("instruction-button");
     this.instructions = document.getElementById("instructions");
 
@@ -46,7 +39,6 @@ class Game {
       this.toggleInstructions()
     );
 
-    
     document.body.addEventListener("click", () => {
       this.playIntroMusic();
     });
@@ -117,9 +109,11 @@ class Game {
   gameLoop() {
     this.ball.moveBall();
     this.updateObstacles();
-    this.obstacles = this.obstacles.filter(
-      (obstacle) => !obstacle.checkCollision(this.player, () => this.loseLife())
-    );
+
+    this.obstacles.forEach((obstacle) => {
+      if (obstacle.checkCollision(this.player, () => this.loseLife(true))) {
+      }
+    });
   }
 
   increaseScore() {
@@ -127,12 +121,15 @@ class Game {
     this.scoreElement.textContent = this.score;
   }
 
-  loseLife() {
+  loseLife(isCollision = false) {
     this.lives--;
     this.livesElement.textContent = this.lives;
 
-    this.obstacles.forEach((obstacle) => obstacle.remove());
-    this.obstacles = [];
+    if (!isCollision) {
+      this.obstacles.forEach((obstacle) => obstacle.remove());
+      this.obstacles = []; 
+    }
+
     if (this.lives <= 0) {
       clearInterval(this.gameInterval);
       this.gameOver();
@@ -150,6 +147,7 @@ class Game {
   updateObstacles() {
     this.obstacles.forEach((obstacle, index) => {
       obstacle.moveObstacle();
+
       if (obstacle.isOutOfScreen()) {
         obstacle.remove();
         this.obstacles.splice(index, 1);
@@ -193,18 +191,17 @@ class Game {
     clearInterval(this.gameInterval);
     clearInterval(this.obstaclesInterval);
 
-    
-    this.musicPlayed = false;  
-    this.playIntroMusic();  
+    this.musicPlayed = false;
+    this.playIntroMusic();
   }
 
   playIntroMusic() {
     if (!this.musicPlayed) {
-      this.introMusic.currentTime = 0;  
+      this.introMusic.currentTime = 0;
       this.introMusic.play().catch((error) => {
         console.log("Erro ao tentar tocar a música:", error);
       });
-      this.musicPlayed = true;  
+      this.musicPlayed = true;
     }
   }
 

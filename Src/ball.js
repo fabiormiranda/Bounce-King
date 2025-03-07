@@ -7,8 +7,8 @@ class Ball {
 
     this.width = 60;
     this.height = 60;
-    this.gravity = 0.12;
-    this.bounceStrength = -15;
+    this.gravity = 0.10;
+    this.bounceStrength = -13;
     this.isPaused = false;
     this.movementInterval = null;
     this.collisionCooldown = false;
@@ -56,15 +56,16 @@ class Ball {
 
     if (!this.collisionCooldown && this.didCollide()) {
       this.velocityY = this.bounceStrength;
-      this.velocityX = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 3);
+      this.velocityX = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 4 + 2);
       this.collisionCooldown = true;
       setTimeout(() => {
         this.collisionCooldown = false;
       }, 200);
     }
 
+ 
     if (this.top + this.height >= this.gameScreen.offsetHeight) {
-      this.loseLife(true);
+      this.loseLife(false);
       this.resetPosition(true);
       this.player.resetPosition();
     }

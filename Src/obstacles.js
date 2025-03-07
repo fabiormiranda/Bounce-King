@@ -34,23 +34,22 @@ class Obstacle {
     const obstacleRect = this.element.getBoundingClientRect();
     const playerRect = player.element.getBoundingClientRect();
 
-    if (
+    const collision =
       obstacleRect.left < playerRect.right &&
       obstacleRect.right > playerRect.left &&
-      obstacleRect.top < playerRect.bottom &&
-      obstacleRect.bottom > playerRect.top
-    ) {
-      loseLife(false);
-      this.remove();
+      obstacleRect.bottom >= playerRect.top &&
+      obstacleRect.top < playerRect.bottom;
+
+    if (collision) {
+      loseLife(); 
+      this.remove(); 
       return true;
     }
     return false;
   }
 
-  isOutOfScreen() {
-    return (
-      this.left + this.width < 0 || this.left > this.gameScreen.offsetWidth
-    );
+  remove() {
+    this.element.remove();
   }
 
   updatePosition() {
@@ -58,7 +57,9 @@ class Obstacle {
     this.element.style.top = `${this.top}px`;
   }
 
-  remove() {
-    this.element.remove();
+  isOutOfScreen() {
+    return (
+      this.left + this.width < 0 || this.left > this.gameScreen.offsetWidth
+    );
   }
 }
