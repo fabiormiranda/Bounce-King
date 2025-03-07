@@ -183,23 +183,18 @@ class Game {
 
   playIntroMusic() {
     this.introMusic.currentTime = 0;
-    this.introMusic.play().catch((error) => {
-      console.log("Erro ao tentar tocar a música de introdução:", error);
-    });
+    this.introMusic.play();
   }
-
+  
   playInGameMusic() {
-    this.inGameMusic.play().catch((error) => {
-      console.log("Erro ao tentar tocar a música de jogo:", error);
-    });
+    this.inGameMusic.play();
   }
-
+  
   playGameOverMusic() {
     this.gameOverMusic.currentTime = 0;
-    this.gameOverMusic.play().catch((error) => {
-      console.log("Erro ao tentar tocar a música de game over:", error);
-    });
+    this.gameOverMusic.play();
   }
+  
 }
 
 document.addEventListener("DOMContentLoaded", () => {
