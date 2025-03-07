@@ -17,7 +17,33 @@ class Game {
     this.obstaclesInterval = null;
     this.obstacles = [];
 
+    this.introMusic = document.getElementById("intro-music"); // Música de introdução
+    this.inGameMusic = document.getElementById("ingame-music");
+    this.gameOverMusic = document.getElementById("gameover-music");
+
+    this.introMusic.volume = 0.05;
+    this.inGameMusic.volume = 0.2;
+    this.gameOverMusic.volume = 0.2;
+
+    this.introMusic.loop = true;
+    
     this.startForm.addEventListener("submit", (event) => this.startGame(event));
+    document.getElementById("restart-button").addEventListener("click", () => this.restartGame());
+    this.instructionButton = document.getElementById("instruction-button");
+    this.instructions = document.getElementById("instructions");
+
+    this.instructionButton.addEventListener("click", () => this.toggleInstructions());
+
+    // Tocar a música de introdução quando a página for carregada
+    this.playIntroMusic();
+  }
+
+  toggleInstructions() {
+    if (this.instructions.style.display === "none" || this.instructions.style.display === "") {
+      this.instructions.style.display = "block";
+    } else {
+      this.instructions.style.display = "none";
+    }
   }
 
   startGame(event) {
@@ -27,21 +53,30 @@ class Game {
     this.gameScreen.style.display = "block";
     this.resetGame();
     this.beginGame();
+
+    // Parar a música de introdução quando o jogo começar
+    this.introMusic.pause();
+    this.introMusic.currentTime = 0; // Reinicia a música
+
+    // Tocar a música do jogo
+    this.playInGameMusic();
   }
 
   resetGame() {
     this.score = 0;
     this.lives = 5;
+    this.obstacles = [];
     this.scoreElement.textContent = this.score;
     this.livesElement.textContent = this.lives;
-    this.obstacles = [];
   }
 
   beginGame() {
     this.player = new Player(this.gameScreen);
     this.ball = new Ball(this.gameScreen, this.player, () => this.loseLife(), () => this.increaseScore());
+
     document.addEventListener("keydown", (event) => this.handleKeyDown(event));
     document.addEventListener("keyup", (event) => this.handleKeyUp(event));
+
     this.gameInterval = setInterval(() => this.gameLoop(), 16);
     this.obstaclesInterval = setInterval(() => this.spawnObstacle(), 3000);
   }
@@ -95,17 +130,72 @@ class Game {
   }
 
   gameOver() {
-    this.player.element.remove();
+    this.player.element.remove(); 
     this.obstacles.forEach((obstacle) => obstacle.element.remove());
     this.livesElement.innerHTML = "";
     this.gameScreen.style.display = "none";
     this.gameOverScreen.style.display = "flex";
     this.endScore.innerText = this.score;
+
     clearInterval(this.gameInterval);
     clearInterval(this.obstaclesInterval);
-    document.getElementById("restart-button").addEventListener("click", () => location.reload());
+
+    // Parar a música do jogo
+    this.inGameMusic.pause();
+    this.inGameMusic.currentTime = 0; // Reinicia a música para quando o jogo começar de novo
+
+    // Tocar música de game over
+    this.playGameOverMusic();
+}
+
+
+  restartGame() {
+    this.resetGame();
+    this.gameOverScreen.style.display = "none";
+    this.gameIntro.style.display = ""; 
+    
+    if (this.ball) {
+      this.ball.element.remove(); 
+    }
+    
+    if (this.player) {
+      this.player.element.remove(); 
+    }
+    
+    this.obstacles.forEach(obstacle => obstacle.remove());
+    this.obstacles = [];
+    
+    clearInterval(this.gameInterval);
+    clearInterval(this.obstaclesInterval);
+
+    // Reiniciar a música de introdução
+    this.playIntroMusic();
   }
-} 
+
+  // Função para tocar a música de introdução
+  playIntroMusic() {
+    this.introMusic.currentTime = 0; // Reiniciar a música
+    this.introMusic.play().catch((error) => {
+      console.log("Erro ao tentar tocar a música de introdução:", error);
+    });
+  }
+
+  // Função para tocar a música do jogo
+  playInGameMusic() {
+    this.inGameMusic.play().catch((error) => {
+      console.log("Erro ao tentar tocar a música de jogo:", error);
+    });
+  }
+
+  // Função para tocar a música de Game Over
+  playGameOverMusic() {
+    this.gameOverMusic.currentTime = 0; // Reiniciar a música de game over
+    this.gameOverMusic.play().catch((error) => {
+      console.log("Erro ao tentar tocar a música de game over:", error);
+    });
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   new Game();
 });
