@@ -29,22 +29,24 @@ body {
 }
 
 .middle-box h1 {
-  color: #fcfcfc;
-  font-size: 3em;  
+  color: #a1ca4a;
+  font-size: 3.5em;  
   font-weight: bold;
+  padding-left: 77px;
   letter-spacing: 2px;  
   text-align: center;
-  padding-top: 60px;
+  padding-top: 80px;
   text-shadow:
-  5px 5px 0px #ffd700, 
-  0 0 15px #00ffcc,  
-  0 0 25px #ff007f,  
-  0 0 35px #00ff00; 
+  4px 3px 0px #f5d736, 
+  0 0 15px #0bb7e5,  
+  0 0 25px #e2e9e4,  
+  0 0 35px #0bb7e5; 
 }
 
 #logo {
   height: 600px;
   width: 600px;
+  padding-left: 70px;
 }
 
 #game-screen {
